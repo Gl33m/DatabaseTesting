@@ -60,7 +60,7 @@ public class MainActivity extends ListActivity implements
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case R.id.insert:
-      createTodo();
+      createItem();
       return true;
     }
     return super.onOptionsItemSelected(item);
@@ -81,7 +81,7 @@ public class MainActivity extends ListActivity implements
     return super.onContextItemSelected(item);
   }
 
-  private void createTodo() {
+  private void createItem() {
     Intent i = new Intent(this, SecondActivity.class);
     startActivity(i);
   }
@@ -91,8 +91,8 @@ public class MainActivity extends ListActivity implements
   protected void onListItemClick(ListView l, View v, int position, long id) {
     super.onListItemClick(l, v, position, id);
     Intent i = new Intent(this, SecondActivity.class);
-    Uri todoUri = Uri.parse(TestingContentProvider.CONTENT_URI + "/" + id);
-    i.putExtra(TestingContentProvider.CONTENT_ITEM_TYPE, todoUri);
+    Uri itemUri = Uri.parse(TestingContentProvider.CONTENT_URI + "/" + id);
+    i.putExtra(TestingContentProvider.CONTENT_ITEM_TYPE, itemUri);
 
     startActivity(i);
   }

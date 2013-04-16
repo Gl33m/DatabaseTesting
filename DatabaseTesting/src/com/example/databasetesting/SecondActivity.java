@@ -23,7 +23,7 @@ public class SecondActivity extends Activity {
   private EditText mTitleText;
   private EditText mBodyText;
 
-  private Uri todoUri;
+  private Uri itemUri;
 
   @Override
   protected void onCreate(Bundle bundle) {
@@ -31,22 +31,22 @@ public class SecondActivity extends Activity {
     setContentView(R.layout.item_edit);
 
     mCategory = (Spinner) findViewById(R.id.category);
-    mTitleText = (EditText) findViewById(R.id.todo_edit_summary);
-    mBodyText = (EditText) findViewById(R.id.todo_edit_description);
-    Button confirmButton = (Button) findViewById(R.id.todo_edit_button);
+    mTitleText = (EditText) findViewById(R.id.item_edit_summary);
+    mBodyText = (EditText) findViewById(R.id.item_edit_description);
+    Button confirmButton = (Button) findViewById(R.id.item_edit_button);
 
     Bundle extras = getIntent().getExtras();
 
     // Check from the saved Instance
-    todoUri = (bundle == null) ? null : (Uri) bundle
+    itemUri = (bundle == null) ? null : (Uri) bundle
         .getParcelable(TestingContentProvider.CONTENT_ITEM_TYPE);
 
     // Or passed from the other activity
     if (extras != null) {
-      todoUri = extras
+      itemUri = extras
           .getParcelable(TestingContentProvider.CONTENT_ITEM_TYPE);
 
-      fillData(todoUri);
+      fillData(itemUri);
     }
 
     confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,7 @@ public class SecondActivity extends Activity {
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     saveState();
-    outState.putParcelable(TestingContentProvider.CONTENT_ITEM_TYPE, todoUri);
+    outState.putParcelable(TestingContentProvider.CONTENT_ITEM_TYPE, itemUri);
   }
 
   @Override
@@ -119,12 +119,12 @@ public class SecondActivity extends Activity {
     values.put(TestingTable.COLUMN_SUMMARY, summary);
     values.put(TestingTable.COLUMN_DESCRIPTION, description);
 
-    if (todoUri == null) {
+    if (itemUri == null) {
       // New item
-      todoUri = getContentResolver().insert(TestingContentProvider.CONTENT_URI, values);
+      itemUri = getContentResolver().insert(TestingContentProvider.CONTENT_URI, values);
     } else {
       // Update item
-      getContentResolver().update(todoUri, values, null, null);
+      getContentResolver().update(itemUri, values, null, null);
     }
   }
 
